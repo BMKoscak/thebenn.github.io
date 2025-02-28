@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TheBenn - Music Producer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Added particles.js CDN for background animation -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --primary-color: #003366; /* Dark blue */
-            --accent-color: #1e90ff;
-            --background-color: #0d1a26;
+            --primary-color: #0f172a;
+            --accent-color: #4f46e5;
+            --background-color: #000000;
             --text-color: #ffffff;
-            --nav-bg-color: rgba(0, 51, 102, 0.9);
-            --modal-bg: rgba(0, 0, 0, 0.7);
+            --text-secondary: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.6);
         }
 
         * {
@@ -24,204 +23,215 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Particles background container */
-        #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            line-height: 1.6;
         }
 
         nav {
-            background-color: var(--nav-bg-color);
-            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 10;
-            backdrop-filter: blur(5px);
+            z-index: 100;
         }
 
         nav ul {
-            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
-        }
-
-        nav li:not(:last-child) {
-            margin-right: 1.5rem;
+            justify-content: flex-end;
+            gap: 2rem;
         }
 
         nav a {
             color: var(--text-color);
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
-            padding-bottom: 2px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
         }
 
-        nav a:hover,
-        nav a.active {
+        nav a:hover {
             color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        #pages {
-            position: relative;
-            padding-top: 70px;
-            min-height: calc(100vh - 70px);
-        }
-
-        .page-wrapper {
-            display: none;
-            padding: 2rem;
-            transition: opacity 0.5s ease;
-        }
-
-        .page-wrapper.active {
-            display: block;
-            opacity: 1;
         }
 
         .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--background-color));
-            margin-bottom: 2rem;
             position: relative;
+            background: linear-gradient(45deg, #000000, #1a1a1a);
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 50%);
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: fadeInDown 1s forwards;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            animation: fadeInUp 1s ease 0.3s forwards;
-            opacity: 0;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
 
-        .hero button {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+        .featured-tracks {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .hero button:hover {
-            background-color: #1c86ee;
-            transform: scale(1.05);
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
-        .soundcloud iframe {
-            transition: transform 0.3s ease;
+        .track-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .track-info {
+            padding: 1.5rem;
+        }
+
+        .button {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
             border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .soundcloud iframe:hover {
-            transform: scale(1.02);
+        .button:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.5s forwards;
-            opacity: 0;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #fff, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .tracks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Add these missing styles */
         .about-container {
             display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
+            gap: 4rem;
             align-items: center;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
 
         .photo {
             flex: 1;
-            background-color: var(--primary-color);
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-color);
-            font-size: 1.5rem;
+            min-width: 300px;
+            height: 400px;
+            background: linear-gradient(45deg, var(--accent-color), transparent);
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .bio {
             flex: 2;
         }
 
-        .testimonial {
-            background-color: var(--primary-color);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-        }
-
-        form {
-            max-width: 600px;
-            margin: auto;
-        }
-
-        form label {
-            display: block;
-            margin: 0.5rem 0 0.2rem;
-        }
-
-        form input, form textarea, form select {
-            width: 100%;
-            padding: 0.7rem;
-            margin-bottom: 1rem;
-            background-color: #1a2a3a;
-            color: var(--text-color);
-            border: 1px solid #334455;
-            border-radius: 4px;
-        }
-
-        form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        form button, .contact-btn {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        form button:hover, .contact-btn:hover {
-            background-color: #1c86ee;
-            transform: scale(1.05);
-        }
-
         footer {
-            background-color: var(--primary-color);
-            padding: 1rem;
+            background: var(--card-bg);
+            padding: 2rem;
             text-align: center;
-            margin-top: 2rem;
+            backdrop-filter: blur(10px);
         }
 
         footer a {
@@ -234,23 +244,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #1a2a3a;
-            color: var(--text-color);
+            background: var(--card-bg);
             padding: 1rem;
-            text-align: center;
-            z-index: 100;
+            backdrop-filter: blur(10px);
             display: none;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.5);
-        }
-
-        #cookies-popup button {
-            margin: 0 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
         }
 
         #privacy-modal {
@@ -259,176 +256,107 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--modal-bg);
-            z-index: 200;
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
-            overflow-y: auto;
+            z-index: 1000;
         }
 
         .modal-content {
-            background-color: #fff;
-            color: #000;
+            background: var(--card-bg);
+            color: var(--text-color);
             padding: 2rem;
+            border-radius: 12px;
             max-width: 800px;
-            width: 100%;
-            border-radius: 8px;
             max-height: 90vh;
             overflow-y: auto;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 1rem;
-        }
-
-        .modal-content p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            backdrop-filter: blur(10px);
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            nav li:not(:last-child) {
-                margin-bottom: 0.5rem;
-                margin-right: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
             .about-container {
                 flex-direction: column;
+                padding: 1.5rem;
             }
 
             .photo {
-                height: 200px;
+                width: 100%;
+                height: 300px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Add particles-js div right after body tag -->
     <div id="particles-js"></div>
 
     <nav>
         <ul>
             <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#tracks" class="nav-link">Tracks</a></li>
             <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#beats" class="nav-link">Beats</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
     </nav>
 
-    <div id="pages">
-        <div class="page-wrapper active">
-            <section id="home" class="page">
-                <div class="hero">
-                    <h1>TheBenn</h1>
-                    <p>Music Producer</p>
-                    <button class="contact-btn" onclick="switchToPage('beats')">View Beats</button>
-                </div>
-                <div class="soundcloud">
-                    <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
-                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1812512640&color=%231e90ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-                    </iframe>
-                </div>
-                <div class="testimonials">
-                    <h2>What People Say</h2>
-                    <div class="testimonial">
-                        <p>"Working with TheBenn was an electrifying experience — our collaboration rocked the charts!" - Luna Vega</p>
-                    </div>
-                    <div class="testimonial">
-                        <p>"TheBenn’s production pushes creative boundaries. Every beat is a masterpiece!" - Zane Hart</p>
-                    </div>
-                </div>
-            </section>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>TheBenn</h1>
+            <p>Crafting atmospheric soundscapes and hard-hitting beats</p>
+            <button class="button">Listen to Latest Tracks</button>
         </div>
+    </section>
 
-        <div class="page-wrapper">
-            <section id="about" class="page">
-                <div class="about-container">
-                    <div class="photo">
-                        <p>Photo of TheBenn</p>
-                    </div>
-                    <div class="bio">
-                        <h2>About</h2>
-                        <p>TheBenn is a passionate music producer blending dark, immersive beats with modern edge. Hailing from Slovenia and evolving with the times, he embraces technology and creativity to produce a sound that is both innovative and heartfelt.</p>
-                        <p>As a multi-talented artist, TheBenn crafts beats, creates mood-enhancing soundscapes, and pushes artistic boundaries — all while connecting with audiences in real time.</p>
-                        <p>"If you can feel the rhythm, then you know the passion behind every track."</p>
-                    </div>
+    <section class="featured-tracks" id="tracks">
+        <h2>Featured Tracks</h2>
+        <div class="tracks-grid">
+            <div class="track-card">
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/YOURTRACKID&color=%234f46e5">
+                </iframe>
+                <div class="track-info">
+                    <h3>Track Name</h3>
+                    <p>Genre • BPM</p>
                 </div>
-            </section>
+            </div>
+            <!-- Add more track cards as needed -->
         </div>
+    </section>
 
-        <div class="page-wrapper">
-            <section id="beats" class="page">
-                <h2>Beats</h2>
-                <div class="soundcloud">
-                    <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
-                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1812512640&color=%231e90ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-                    </iframe>
-                </div>
-                <p>Interested in purchasing a beat? <button class="contact-btn" onclick="switchToPage('contact')">Contact me</button></p>
-            </section>
+    <section id="about" class="page">
+        <div class="about-container">
+            <div class="photo">
+                <p>Photo of TheBenn</p>
+            </div>
+            <div class="bio">
+                <h2>About</h2>
+                <p>TheBenn is a passionate music producer blending dark, immersive beats with modern edge. Hailing from Slovenia and evolving with the times, he embraces technology and creativity to produce a sound that is both innovative and heartfelt.</p>
+                <p>As a multi-talented artist, TheBenn crafts beats, creates mood-enhancing soundscapes, and pushes artistic boundaries — all while connecting with audiences in real time.</p>
+                <p>"If you can feel the rhythm, then you know the passion behind every track."</p>
+            </div>
         </div>
+    </section>
 
-        <div class="page-wrapper">
-            <section id="contact" class="page">
-                <h2>Contact</h2>
-                <form id="contact-form">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                    <label for="subject">Subject:</label>
-                    <select id="subject" name="subject">
-                        <option value="general">General Inquiry</option>
-                        <option value="beat">Beat Purchase</option>
-                        <option value="collaboration">Collaboration</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" required></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </section>
-        </div>
-    </div>
+    <section id="contact" class="page">
+        <h2>Contact</h2>
+        <form id="contact-form" class="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="subject">Subject:</label>
+            <select id="subject" name="subject">
+                <option value="general">General Inquiry</option>
+                <option value="beat">Beat Purchase</option>
+                <option value="collaboration">Collaboration</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit" class="button">Send</button>
+        </form>
+    </section>
 
     <footer>
         <p>&copy; 2025 TheBenn Prod. All rights reserved.</p>
