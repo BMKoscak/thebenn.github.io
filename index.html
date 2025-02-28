@@ -92,7 +92,14 @@
             font-weight: 700;
             margin-bottom: 1rem;
             background: linear-gradient(to right, #fff, #4f46e5);
+            background-clip: text;
+            background-clip: text;
+            background-clip: text;
+            background-clip: text;
+            background-clip: text;
             -webkit-background-clip: text;
+
+
             -webkit-text-fill-color: transparent;
         }
 
@@ -461,11 +468,12 @@
 
         // Page switching functionality
         const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page-wrapper');
+        // Bug fixed: Select pages using the correct selector ('.page')
+        const pages = document.querySelectorAll('section.page');
 
         function switchToPage(pageId) {
             pages.forEach(page => {
-                if (page.querySelector('.page').id === pageId) {
+                if (page.id === pageId) {
                     page.classList.add('active');
                 } else {
                     page.classList.remove('active');
